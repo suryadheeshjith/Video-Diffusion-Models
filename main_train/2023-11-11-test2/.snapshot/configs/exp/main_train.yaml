@@ -1,0 +1,27 @@
+# @package _global_
+defaults:
+  - _self_
+
+experiment: main_train
+
+# experiment args
+
+
+# distributed args
+
+
+# training args
+epochs: 10
+
+# data parameters
+data_overlay: ""
+
+
+# model parameters
+
+
+
+# optimizer parameters
+
+
+

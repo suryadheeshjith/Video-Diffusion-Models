@@ -1,0 +1,57 @@
+# @package _global_
+defaults:
+  - _self_
+
+experiment: main_lincls
+
+# experiment args
+output_dir: ${join_path:${hydra:sweep.dir},${hydra:sweep.subdir}}
+checkpoint_dir: null
+save_dir: null
+log_dir: null
+device: cuda
+seed: 0
+start_epoch: 0
+print_freq: 20
+resume: null
+pretrained: "/scratch/sd5313/CILVR/fall23/directed-mae/weights/moco_v2_800ep_pretrain.pth.tar"
+evaluate: False
+wandb: True
+
+# distributed args
+# dist_url: ${add_uuid:file://${abs_path:${join_path:${hydra:sweep.dir},${hydra:sweep.subdir},dist_url_init}}}
+distributed: True
+# World Size = Number of nodes used
+world_size: 1
+dist_url: "env://"
+dist_backend: "nccl"
+dist_on_itp: False
+# Need not be specified since we are using slurm
+rank: null
+gpu: null
+
+# training args
+epochs: 10
+
+# data parameters
+data_overlay: "/vast/work/public/ml-datasets/imagenet/imagenet-train.sqf:ro,/vast/work/public/ml-datasets/imagenet/imagenet-val.sqf:ro"
+data: "/imagenet"
+# Per GPU batch size (256/8=32)
+batch_size: 32
+# Per GPU workers (32/8=4)
+workers: 4
+pin_mem: True
+limit: -1
+
+
+# model parameters
+arch: resnet50
+
+
+# optimizer parameters
+lr: 30.0
+schedule: [60, 80]
+momentum: 0.9
+weight_decay: 0.05
+
+

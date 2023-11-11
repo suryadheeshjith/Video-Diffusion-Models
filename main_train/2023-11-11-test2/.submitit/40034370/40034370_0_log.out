@@ -1,0 +1,13 @@
+RESUBMIT: resubmits remaining -- 2
+submitit INFO (2023-11-11 12:39:15,151) - Starting with JobEnvironment(job_id=40034370, hostname=gr002.hpc.nyu.edu, local_rank=0(1), node=0(1), global_rank=0(1))
+submitit INFO (2023-11-11 12:39:15,152) - Loading pickle: /scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/main_train/2023-11-11-test2/.submitit/40034370/40034370_submitted.pkl
+[2023-11-11 12:39:15,901][__main__][INFO] - JobEnvironment(job_id=40034370, hostname=gr002.hpc.nyu.edu, local_rank=0(1), node=0(1), global_rank=0(1))
+[2023-11-11 12:39:15,905][__main__][INFO] - Beginning experiment [main_train].
+[2023-11-11 12:39:15,905][root][INFO] - Hello world
+Hello world
+[2023-11-11 12:39:15,905][__main__][INFO] - Completed experiment.
+[2023-11-11 12:39:15,905][submitit_hydra.LogJobReturnCallback][INFO] - Succeeded with return value: None
+submitit INFO (2023-11-11 12:39:15,905) - Job completed successfully
+[2023-11-11 12:39:15,905][submitit][INFO] - Job completed successfully
+submitit INFO (2023-11-11 12:39:15,912) - Exitting after successful completion
+[2023-11-11 12:39:15,912][submitit][INFO] - Exitting after successful completion

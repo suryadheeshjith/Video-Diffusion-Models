@@ -1,0 +1,17 @@
+base_output_dir: /scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels
+experiment: main_train
+sub_dir: ${experiment}
+name: 2023-11-11-test2
+experiment_dir: ${join_path:${hydra:sweep.dir},${hydra:sweep.subdir}}
+compute:
+  gpu: rtx8000
+  nodes: 1
+  gpus_per_node: 1
+  mem_per_task: 90
+  cpus_per_task: 12
+  timeout: 120
+  exclude: null
+  resubmit: 2
+sub_name: ${hydra:sweep.subdir}
+epochs: 10
+data_overlay: ''
