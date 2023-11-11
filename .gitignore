@@ -3,5 +3,4 @@ weights
 .DS_Store
 .python-greene
 .resubmit.sh
-submitit_hydra.py
 configs
