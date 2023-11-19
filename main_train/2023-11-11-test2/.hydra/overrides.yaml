@@ -1,4 +1,0 @@
-- compute/greene=1x1
-- compute/greene/node=rtx8000
-- exp=main_train
-- name=2023-11-11-test2

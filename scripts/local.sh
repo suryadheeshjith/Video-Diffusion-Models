@@ -7,4 +7,4 @@ comp="compute=local"
 # GO BOTTOM TO TOP
 
 # test mae pretrain
-./.python-greene submitit_hydra.py $comp exp=main_train wandb=False name="$(date +%F)-test1"
+./.python-greene submitit_hydra.py $comp exp=save_dataset_from_iris name="$(date +%F)-breakouttest"

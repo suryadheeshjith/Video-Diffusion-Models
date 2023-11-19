@@ -1,0 +1,25 @@
+# @package _global_
+defaults:
+  - _self_
+  - iris: iris
+
+experiment: save_dataset_from_iris
+
+# experiment args
+output_dir: ${join_path:${hydra:sweep.dir},${hydra:sweep.subdir}}
+checkpoint_dir: ${join_path:${base_output_dir},checkpoints}
+checkpoint_file: Breakout # Change if reqd
+save_dir:  ${join_path:${base_output_dir}, iris_datasets}
+mode: "agent_in_env" # "agent_in_world_model" 
+
+# data parameters
+data_overlay: ""
+dataset_name: "Breakout" # Change if reqd
+iris:
+  env:
+    train: 
+      id: BreakoutNoFrameskip-v4 # Change if reqd
+fps: 15
+header: 0
+reconstruction: 0
+save_mode: 0
