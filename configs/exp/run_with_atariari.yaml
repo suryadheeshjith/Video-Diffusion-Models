@@ -1,0 +1,16 @@
+# @package _global_
+defaults:
+  - _self_
+
+experiment: run_with_atariari
+
+# experiment args
+output_dir: ${join_path:${hydra:sweep.dir},${hydra:sweep.subdir}}
+seed: 0
+
+# data parameters
+data_overlay: ""
+env_name: "BreakoutNoFrameskip-v4" # Change if reqd
+steps: 50000
+collect_mode: "pretrained_ppo" # "random_agent" or "pretrained_ppo" Use ppo for a pretrained policy with successful episodes
+min_episode_length: 64

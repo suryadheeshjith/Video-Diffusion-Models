@@ -8,3 +8,7 @@ checkpoints
 ./save_dataset_from_iris
 main_train
 iris_datasets
+roms
+save_dataset_from_iris
+tmp
+trained_models_full

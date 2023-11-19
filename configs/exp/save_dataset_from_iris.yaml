@@ -14,11 +14,13 @@ mode: "agent_in_env" # "agent_in_world_model"
 
 # data parameters
 data_overlay: ""
-dataset_name: "Breakout" # Change if reqd
+dataset_name: "Breakout3" # Change if reqd
 iris:
   env:
     train: 
       id: BreakoutNoFrameskip-v4 # Change if reqd
+    test: 
+      max_episode_steps: 108000 # Change if reqd
 fps: 15
 header: 0
 reconstruction: 0
