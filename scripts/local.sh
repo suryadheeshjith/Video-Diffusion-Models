@@ -7,4 +7,4 @@ comp="compute=local"
 # GO BOTTOM TO TOP
 
 # test mae pretrain
-./.python-greene submitit_hydra.py $comp exp=run_with_atariari name="$(date +%F)-breakouttest2"
+./.python-greene submitit_hydra.py $comp exp=run_with_atariari name="$(date +%F)-with_iris"

@@ -12,14 +12,14 @@ from game import AgentEnv, EpisodeReplayEnv, Save
 from models.actor_critic import ActorCritic
 from models.world_model import WorldModel
 
+import json
 import os
 os.environ["SDL_VIDEODRIVER"] = "dummy"
 
 def main(args):
-    import json
     resolved_args = omegaconf.OmegaConf.to_container(args, resolve=True, throw_on_missing=True)
     print("{}".format(resolved_args).replace(', ', ',\n'))
-    # print(args)
+    
     device = torch.device(args.iris.common.device)
     assert args.mode in ('agent_in_env', 'agent_in_world_model')
 

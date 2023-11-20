@@ -97,6 +97,13 @@ class Tokenizer(nn.Module):
 
     def preprocess_input(self, x: torch.Tensor) -> torch.Tensor:
         """x is supposed to be channels first and in [0, 1]"""
+        if x.min() >=0 and x.max() <=1:
+            pass
+        elif x.min() >= 0 and x.max() > 1:
+            x = x / 255.0
+        else:
+            print("Wrong formatted input")
+            exit(0)
         return x.mul(2).sub(1)
 
     def postprocess_output(self, y: torch.Tensor) -> torch.Tensor:
