@@ -7,12 +7,14 @@ import hydra
 from hydra.utils import instantiate
 import torch
 import omegaconf
+import numpy as np
 
 from agent import Agent
 from envs import SingleProcessEnv, WorldModelEnv
 from game import AgentEnv, EpisodeReplayEnv, Save
 from models.actor_critic import ActorCritic
 from models.world_model import WorldModel
+import src_utils.misc as misc
 
 import json
 from einops import rearrange
@@ -63,7 +65,7 @@ def main(args):
         return
 
     print("Loaded encoder")
-    # Run diffusion model
+    
     for i, tr_one_episode in enumerate(tr_episodes):
         
         # change this. Need to use dataset and dataloader for identical batch sizes
@@ -73,10 +75,35 @@ def main(args):
 
         tr_one_episode = tr_one_episode.to(device, non_blocking=True)
 
-        encoded_img = encoder.encode(tr_one_episode, should_preprocess=True).z.detach().cpu()
-        print("Encoded image shape: ", encoded_img.shape)
+        episode_buffer = []
+        encoder_buffer = []
+        for frame in tr_one_episode:
+            encoded_frame = encoder.encode(frame, should_preprocess=True).z.detach().cpu()
+
+            episode_buffer.append(np.array(frame.cpu()))
+            encoder_buffer.append(np.array(encoded_frame))
+
+        misc.save_recording(Path(args.save_dir) / args.env_name, str(i) + "_train", np.stack(episode_buffer), np.stack(encoder_buffer))
 
 
+    for i, tr_one_episode in enumerate(val_episodes):
+        
+        # change this. Need to use dataset and dataloader for identical batch sizes
+        ep_length = len(tr_one_episode)
+        tr_one_episode = torch.cat(tr_one_episode)
+        tr_one_episode = rearrange(tr_one_episode, '(t c) h w -> t c h w', t=ep_length, c=3 if args.color else 1) 
+
+        tr_one_episode = tr_one_episode.to(device, non_blocking=True)
+
+        episode_buffer = []
+        encoder_buffer = []
+        for frame in tr_one_episode:
+            encoded_frame = encoder.encode(frame, should_preprocess=True).z.detach().cpu()
+
+            episode_buffer.append(np.array(frame.cpu()))
+            encoder_buffer.append(np.array(encoded_frame))
+
+        misc.save_recording(Path(args.save_dir) / args.env_name, str(i) + "_val", np.stack(episode_buffer), np.stack(encoder_buffer))
 
 
 

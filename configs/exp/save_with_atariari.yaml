@@ -3,11 +3,12 @@ defaults:
   - _self_
   - iris: iris
 
-experiment: run_with_atariari
+experiment: save_with_atariari
 
 # experiment args
 output_dir: ${join_path:${hydra:sweep.dir},${hydra:sweep.subdir}}
 checkpoint_dir: ${join_path:${base_output_dir},checkpoints}
+save_dir:  ${join_path:${base_output_dir}, saved_npy}
 checkpoint_file: Breakout # Change if reqd (Checkpoint for iris encoder)
 seed: 0
 device: cuda
@@ -16,8 +17,8 @@ encoder: "iris" # Change if reqd
 # data parameters
 data_overlay: ""
 env_name: "BreakoutNoFrameskip-v4" # Change if reqd
-steps: 500 #50000
-collect_mode: "random_agent" # "random_agent" or "pretrained_ppo_color" 
+steps: 5000 #50000
+collect_mode: "pretrained_ppo_color" # "random_agent" or "pretrained_ppo_color" 
 color: True # Always set to True
 min_episode_length: 64
 
