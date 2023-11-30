@@ -125,7 +125,7 @@ def get_ppo_color_rollouts(env_name, steps, seed=42, num_processes=1,
     while not os.path.exists(filepath):
         time.sleep(5)
 
-    envs = make_vec_envs(env_name, seed,  num_processes, num_frame_stack, downsample, color)
+    envs = make_vec_envs(env_name, seed,  num_processes, num_frame_stack, downsample, False)
     color_envs = make_vec_envs(env_name, seed,  num_processes, num_frame_stack, downsample, True)
 
     actor_critic, ob_rms = torch.load(filepath, map_location=lambda storage, loc: storage)
