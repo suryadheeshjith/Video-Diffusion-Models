@@ -17,7 +17,7 @@ encoder: "iris" # Change if reqd
 # data parameters
 data_overlay: ""
 env_name: "BreakoutNoFrameskip-v4" # Change if reqd
-steps: 5000 #50000
+steps: 100000
 collect_mode: "pretrained_ppo_color" # "random_agent" or "pretrained_ppo_color" 
 color: True # Always set to True
 min_episode_length: 64

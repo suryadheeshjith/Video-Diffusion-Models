@@ -83,7 +83,7 @@ def main(args):
             episode_buffer.append(np.array(frame.cpu()))
             encoder_buffer.append(np.array(encoded_frame))
 
-        misc.save_recording(Path(args.save_dir) / args.env_name, str(i) + "_train", np.stack(episode_buffer), np.stack(encoder_buffer))
+        misc.save_recording(Path(args.save_dir) / args.env_name / "train", str(i+1), np.stack(episode_buffer), np.stack(encoder_buffer))
 
 
     for i, tr_one_episode in enumerate(val_episodes):
@@ -103,7 +103,7 @@ def main(args):
             episode_buffer.append(np.array(frame.cpu()))
             encoder_buffer.append(np.array(encoded_frame))
 
-        misc.save_recording(Path(args.save_dir) / args.env_name, str(i) + "_val", np.stack(episode_buffer), np.stack(encoder_buffer))
+        misc.save_recording(Path(args.save_dir) / args.env_name / "val", str(i+1), np.stack(episode_buffer), np.stack(encoder_buffer))
 
 
 
