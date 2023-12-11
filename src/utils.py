@@ -88,6 +88,8 @@ def convert_encodings(encodings, enc_type, frame_shape):
         encodings = torch.nn.functional.adaptive_avg_pool2d(encodings, (4, 2))
     elif enc_type == "max":
         encodings = torch.nn.functional.adaptive_max_pool2d(encodings, (4, 2))
+    elif enc_type == "bilinear":
+        encodings = torch.nn.functional.interpolate(encodings, size=(6, 4), mode='bilinear', align_corners=False)
     
     encodings = encodings.reshape(enc_shape[0], enc_shape[1], -1, *frame_shape[3:])
     return encodings

@@ -7,4 +7,4 @@ comp="compute=local"
 # GO BOTTOM TO TOP
 
 # test mae crop
-./.python-greene submitit_hydra.py $comp exp=breakout name="$(date +%F)-local-encoder_mask_train_test"
+./.python-greene submitit_hydra.py $comp exp=breakout_videogen_baseline_150k_bs96_3eps name="$(date +%F)-VIDEOGEN-baseline_150k_bs96_3eps"

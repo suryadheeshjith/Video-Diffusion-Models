@@ -543,7 +543,10 @@ class SPADE_NCSNpp(nn.Module):
     # Downsampling block
 
     if self.config.use_encoding:
-      modules.append(conv3x3(channels*self.num_frames + self.encoding_frames, nf))
+      if self.config.model.spade:
+        modules.append(conv3x3(channels*self.num_frames + self.encoding_frames, nf))
+      if self.config.model.spade3:
+        modules.append(conv3x3(channels*(self.num_frames + self.encoding_frames), nf))
     else:
       modules.append(conv3x3(channels*self.num_frames, nf))
     hs_c = [nf]
@@ -1079,7 +1082,7 @@ class UNetMore_DDPM(nn.Module):
 
     self.config = config
 
-    if getattr(config.model, 'spade', False):
+    if getattr(config.model, 'spade', False) or getattr(config.model, 'spade3', False):
       self.unet = SPADE_NCSNpp(config)
     elif getattr(config.model, 'spade2', False):
       self.unet = SPADE_NCSNpp2(config)

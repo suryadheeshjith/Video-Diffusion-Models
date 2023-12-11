@@ -93,13 +93,19 @@ def conditioning_fn(config, X, num_frames_pred=0, prob_mask_cond=0.0, prob_mask_
         cond_frames = torch.cat([cond_frames, future_frames], dim=1)
     
     if encodings is not None:
+        if config.encoding_type == "bilinear":
+            channels = 3
+        else:
+            channels = 1
+
         pred_encodings = encodings[:, cond:cond+pred].reshape(len(X), -1, imsize, imsize)
 
         if config.encoding_prob > 0.0:
             # Different masking scheme compared to the scheme used for past and future frames. 
             # Here, we use probability for each encoding to be masked, instead of using a single probability for all encodings.
             pred_encodings_mask = (torch.rand([X.shape[0], pred], device=X.device) > config.encoding_prob)
-            pred_encodings = pred_encodings_mask.reshape(X.shape[0], pred, 1, 1) * pred_encodings
+            pred_encodings_mask = pred_encodings_mask.repeat_interleave(channels, dim=1)
+            pred_encodings = pred_encodings_mask.reshape(X.shape[0], pred*channels, 1, 1) * pred_encodings
             # encoding_mask = encoding_mask.to(torch.int32)
 
         cond_frames = torch.cat([cond_frames, pred_encodings], dim=1)
@@ -1649,10 +1655,17 @@ class NCSNRunner():
 
                     mynet = scorenet
                     if self.config.use_encoding:
-                        final_cond = torch.cat([cond, cond_emb[:,i_frame*self.config.data.num_frames:(i_frame+1)*self.config.data.num_frames]], dim=1)
-                        if final_cond.shape[1] < cond.shape[1] + self.config.data.num_frames:
-                            num_zeros = cond.shape[1] + self.config.data.num_frames - final_cond.shape[1]
-                            final_cond = torch.cat([final_cond, torch.zeros([final_cond.shape[0], num_zeros, *final_cond.shape[2:]], device=self.config.device)], dim=1)
+                        if self.config.encoding_type == "bilinear":
+                            final_cond = torch.cat([cond, cond_emb[:,i_frame*self.config.data.num_frames*3:(i_frame+1)*self.config.data.num_frames*3]], dim=1)
+                            if final_cond.shape[1] < cond.shape[1] + self.config.data.num_frames*3:
+                                num_zeros = cond.shape[1] + self.config.data.num_frames*3 - final_cond.shape[1]
+                                final_cond = torch.cat([final_cond, torch.zeros([final_cond.shape[0], num_zeros, *final_cond.shape[2:]], device=self.config.device)], dim=1)
+                        else:
+                            final_cond = torch.cat([cond, cond_emb[:,i_frame*self.config.data.num_frames:(i_frame+1)*self.config.data.num_frames]], dim=1)
+                            if final_cond.shape[1] < cond.shape[1] + self.config.data.num_frames:
+                                num_zeros = cond.shape[1] + self.config.data.num_frames - final_cond.shape[1]
+                                final_cond = torch.cat([final_cond, torch.zeros([final_cond.shape[0], num_zeros, *final_cond.shape[2:]], device=self.config.device)], dim=1)
+                       
                     else:
                         final_cond = cond
                     # Generate samples
@@ -1836,10 +1849,16 @@ class NCSNRunner():
 
                     for i_frame in tqdm(range(n_iter_frames), desc="Generating video frames"):
                         if self.config.use_encoding:
-                            final_cond = torch.cat([cond_fvd, cond_emb[:,i_frame*self.config.data.num_frames:(i_frame+1)*self.config.data.num_frames]], dim=1)
-                            if final_cond.shape[1] < cond_fvd.shape[1] + self.config.data.num_frames:
-                                num_zeros = cond_fvd.shape[1] + self.config.data.num_frames - final_cond.shape[1]
-                                final_cond = torch.cat([final_cond, torch.zeros([final_cond.shape[0], num_zeros, *final_cond.shape[2:]], device=self.config.device)], dim=1)
+                            if self.config.encoding_type == "bilinear":
+                                final_cond = torch.cat([cond_fvd, cond_emb[:,i_frame*self.config.data.num_frames*3:(i_frame+1)*self.config.data.num_frames*3]], dim=1)
+                                if final_cond.shape[1] < cond_fvd.shape[1] + self.config.data.num_frames*3:
+                                    num_zeros = cond_fvd.shape[1] + self.config.data.num_frames*3 - final_cond.shape[1]
+                                    final_cond = torch.cat([final_cond, torch.zeros([final_cond.shape[0], num_zeros, *final_cond.shape[2:]], device=self.config.device)], dim=1)
+                            else:
+                                final_cond = torch.cat([cond_fvd, cond_emb[:,i_frame*self.config.data.num_frames:(i_frame+1)*self.config.data.num_frames]], dim=1)
+                                if final_cond.shape[1] < cond_fvd.shape[1] + self.config.data.num_frames:
+                                    num_zeros = cond_fvd.shape[1] + self.config.data.num_frames - final_cond.shape[1]
+                                    final_cond = torch.cat([final_cond, torch.zeros([final_cond.shape[0], num_zeros, *final_cond.shape[2:]], device=self.config.device)], dim=1)
                         else:
                             final_cond = cond_fvd
 

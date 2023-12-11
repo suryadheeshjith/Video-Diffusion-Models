@@ -47,6 +47,11 @@ def override_config(args):
     if args.data.prob_mask_sync:
         assert args.data.prob_mask_cond > 0 and args.data.prob_mask_cond == args.data.prob_mask_future
 
+    if args.model.spade3:
+        assert args.encoding_type == "bilinear"
+    
+    if args.encoding_type == "bilinear":
+        assert args.model.spade3 and not args.model.spade2 and not args.model.spade
     # Below were all commented!!
 
     if args.sampling.fvd and args.data.channels != 3:
