@@ -24,6 +24,7 @@ class AtariDataset(Dataset):
         self.frames = []
         self.encodings = []
         # iterate over data files
+        print("Number of files in {}: {}".format(folder_path, int(len(os.listdir(self.folder_path))/2)))
         for i in range(int(len(os.listdir(self.folder_path))/2)):
         # for i in range(1):
             self.raw_frame_data.append(np.load(os.path.join(self.folder_path, "{}_frames.npy".format(i+1))))
@@ -58,11 +59,11 @@ class AtariDataset(Dataset):
 
         return frames, encodings
 
-dataset = AtariDataset("./saved_npy/BreakoutNoFrameskip-v4/train")
+dataset = AtariDataset("/vast/sd5313/data/BreakoutNoFrameskip-v4/train")
 print("Train Dataset Length", len(dataset))
 dataloader = DataLoader(dataset, batch_size=1, shuffle=True, num_workers=4)
 
-val_dataset = AtariDataset("./saved_npy/BreakoutNoFrameskip-v4/val")
+val_dataset = AtariDataset("/vast/sd5313/data/BreakoutNoFrameskip-v4/val")
 print("Val Dataset Length", len(val_dataset))
 val_dataloader = DataLoader(dataset, batch_size=1, shuffle=True, num_workers=4)
 
