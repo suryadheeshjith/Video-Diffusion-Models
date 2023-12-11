@@ -30,6 +30,7 @@ class WorldModelEnv:
     def reset(self) -> torch.FloatTensor:
         assert self.env is not None
         obs = torchvision.transforms.functional.to_tensor(self.env.reset()).to(self.device).unsqueeze(0)  # (1, C, H, W) in [0., 1.]
+        print(obs.shape)
         return self.reset_from_initial_observations(obs)
 
     @torch.no_grad()
@@ -102,3 +103,9 @@ class WorldModelEnv:
     def render(self):
         assert self.obs_tokens.shape == (1, self.num_observations_tokens)
         return self.render_batch()[0]
+    
+    @torch.no_grad()
+    def get_tokens(self):
+        embedded_tokens = self.tokenizer.embedding(self.obs_tokens)
+        z = rearrange(embedded_tokens, 'b (h w) e -> b e h w', h=int(np.sqrt(self.num_observations_tokens)))
+        return z

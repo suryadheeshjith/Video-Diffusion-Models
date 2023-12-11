@@ -24,7 +24,7 @@ from torch.utils.data import DataLoader
 from torchvision.transforms.functional import resized_crop
 from torchvision.utils import make_grid, save_image
 
-import models.eval_models as eval_models
+import mcvd_models.eval_models as eval_models
 
 from datasets.atari import AtariDataset, get_atari_transform
 from datasets import get_dataset, data_transform, inverse_data_transform
@@ -32,18 +32,18 @@ from datasets.ffhq_tfrecords import FFHQ_TFRecordsDataLoader
 from evaluation.fid_PR import get_fid, get_fid_PR, get_stats_path, get_feats_path
 from losses import get_optimizer, warmup_lr
 from losses.dsm import anneal_dsm_score_estimation
-from models import (ddpm_sampler,
+from mcvd_models import (ddpm_sampler,
                     ddim_sampler,
                     FPNDM_sampler,
                     anneal_Langevin_dynamics,
                     anneal_Langevin_dynamics_consistent,
                     anneal_Langevin_dynamics_inpainting,
                     anneal_Langevin_dynamics_interpolation)
-from models.ema import EMAHelper
-from models.fvd.fvd import get_fvd_feats, frechet_distance, load_i3d_pretrained
-from models.unet import UNet_SMLD, UNet_DDPM
+from mcvd_models.ema import EMAHelper
+from mcvd_models.fvd.fvd import get_fvd_feats, frechet_distance, load_i3d_pretrained
+from mcvd_models.unet import UNet_SMLD, UNet_DDPM
 
-from utils import *
+from DiffusionModels.src.mcvd_utils import *
 #import pdb; pdb.set_trace()
 
 __all__ = ['NCSNRunner']
@@ -113,10 +113,10 @@ def get_model(config):
     depth = getattr(config.model, 'depth', 'deep')
 
     if arch == 'unetmore':
-        from models.better.ncsnpp_more import UNetMore_DDPM # This lets the code run on CPU when 'unetmore' is not used
+        from mcvd_models.better.ncsnpp_more import UNetMore_DDPM # This lets the code run on CPU when 'unetmore' is not used
         return UNetMore_DDPM(config).to(config.device)#.to(memory_format=torch.channels_last).to(config.device)
     elif arch in ['unetmore3d', 'unetmorepseudo3d']:
-        from models.better.ncsnpp_more import UNetMore_DDPM # This lets the code run on CPU when 'unetmore' is not used
+        from mcvd_models.better.ncsnpp_more import UNetMore_DDPM # This lets the code run on CPU when 'unetmore' is not used
         # return UNetMore_DDPM(config).to(memory_format=torch.channels_last_3d).to(config.device) # channels_last_3d doesn't work!
         return UNetMore_DDPM(config).to(config.device)#.to(memory_format=torch.channels_last).to(config.device)
 

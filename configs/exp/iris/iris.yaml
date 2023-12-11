@@ -41,7 +41,7 @@ collection:
       num_steps: 200
       burn_in: ${iris.training.actor_critic.burn_in}
   test:
-    num_envs: 8
+    num_envs: 1
     num_episodes_to_save: ${iris.collection.train.num_episodes_to_save}
     config:
       epsilon: 0.0

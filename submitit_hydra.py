@@ -29,12 +29,15 @@ NAME_MAX = 255
 
 @hydra.main(version_base=None, config_name="conf", config_path=CONFIG_PATH)
 def my_app(cfg: DictConfig) -> None:
+    OmegaConf.set_struct(cfg, False)
     try:
         env = submitit.JobEnvironment()
         log.info(env.__repr__())
     except:
         log.info("Running locally.")
     
+    sys.path.append("src/")
+    sys.path.append("src/iris")
     main_fn = __import__("src." + cfg.experiment, fromlist=[None]).main
     log.info(f"Beginning experiment [{cfg.experiment}].")
     main_fn(cfg)

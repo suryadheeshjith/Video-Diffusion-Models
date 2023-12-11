@@ -1,8 +1,8 @@
 import torch
 from torch.autograd import Variable
-import models.dist_model as dist_model
+import mcvd_models.dist_model as dist_model
 import numpy as np
-import models.dist_model as dist_model
+import mcvd_models.dist_model as dist_model
 
 # Taken from https://github.com/psh01087/Vid-ODE/blob/main/eval_models/__init__.py
 class PerceptualLoss(torch.nn.Module):
