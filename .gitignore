@@ -2,8 +2,8 @@ __pycache__
 weights
 .DS_Store
 .LOCAL
-.python-greene
-.resubmit.sh
+# .python-greene
+# .resubmit.sh
 checkpoints
 ./save_dataset_from_iris
 main_train
