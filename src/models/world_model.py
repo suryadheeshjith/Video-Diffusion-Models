@@ -6,7 +6,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from dataset import Batch
+from datasets.iris_dataset import Batch
 from .kv_caching import KeysValues
 from .slicer import Embedder, Head
 from .tokenizer import Tokenizer

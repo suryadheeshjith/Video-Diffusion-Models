@@ -1,6 +1,7 @@
 # SMLD: s = -1/sigma * z
 # DDPM: s = -1/sqrt(1 - alpha) * z
 # All `scorenet` models return z, not s!
+from .transformer import Transformer, TransformerConfig
 
 import torch
 import logging

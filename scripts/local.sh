@@ -7,4 +7,4 @@ comp="compute=local"
 # GO BOTTOM TO TOP
 
 # test mae crop
-./.python-greene submitit_hydra.py $comp exp=breakout_videogen_baseline_150k_bs96_3eps name="$(date +%F)-VIDEOGEN-baseline_150k_bs96_3eps"
+./.python-greene submitit_hydra.py $comp exp=save_with_atariari name="$(date +%F)-iris_test"

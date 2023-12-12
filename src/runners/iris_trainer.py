@@ -14,7 +14,7 @@ import torch.nn as nn
 from tqdm import tqdm
 import wandb
 
-from agent import Agent
+from models.agent import Agent
 from collector import Collector
 from envs import SingleProcessEnv, MultiProcessEnv
 from episode import Episode

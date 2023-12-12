@@ -19,7 +19,7 @@ verbose: 'info' # Verbose level: info | debug | warning | critical
 stats_download: false
 data_path: /vast/sd5313/data/BreakoutNoFrameskip-v4
 
-resume_training: false
+resume_training: true
 comment: ''
 
 # OVERRIDES AND ARGS
@@ -28,12 +28,13 @@ comment: ''
 no_ema: false
 
 # Mode
-mode: video_gen # train, test, fast_fid, sample, video_gen
+mode: train # train, test, fast_fid, sample, video_gen
 use_encoding: false
 encoding_type: avg # avg, max
 encoding_prob: 0.5
-ckpt_path: /scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_300K_bs128_3epsends.pt #/scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_80k_bs32_0epends.pt # /scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_80k_bs32_0epends.pt # '/scratch/mr6744/shared/checkpoint.pt'
-episode_end: 3 # 3
+ckpt_path: /scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/main2/2023-12-10-1GPU_0EpENDS/logs/checkpoint.pt #/scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_300K_bs128_3epsends.pt #/scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_80k_bs32_0epends.pt # /scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_80k_bs32_0epends.pt # '/scratch/mr6744/shared/checkpoint.pt'
+episode_end: 0 # 3
+autoregress: false
 
 # FID
 fid_batch_size: 1000
@@ -58,10 +59,10 @@ start_at: 0
 
 training:
   L1: false
-  batch_size: 128
+  batch_size: 32
   n_epochs: 1000000
   n_iters: 3000001
-  snapshot_freq: 50000
+  snapshot_freq: 1500 # 50000
   snapshot_sampling: false
   sample_freq: 50000
   val_freq: 1000
@@ -164,6 +165,7 @@ model:
   cond_emb: false
   spade: false
   spade2: false # To use this, set to true and set spade to false
+  spade3: false # To use this, set to true and set other spades to false
   spade_dim: 128
 
 optim:

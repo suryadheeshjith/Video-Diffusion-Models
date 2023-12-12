@@ -6,7 +6,7 @@ from hydra.utils import instantiate
 import torch
 import omegaconf
 
-from agent import Agent
+from models.agent import Agent
 from envs import SingleProcessEnv, WorldModelEnv
 from game import AgentEnv, EpisodeReplayEnv, Save
 from models.actor_critic import ActorCritic

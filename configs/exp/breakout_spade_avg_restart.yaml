@@ -34,6 +34,7 @@ encoding_type: avg # avg, max
 encoding_prob: 0.5
 ckpt_path: <your_path> #/scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_300K_bs128_3epsends.pt #/scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_80k_bs32_0epends.pt # /scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_80k_bs32_0epends.pt # '/scratch/mr6744/shared/checkpoint.pt'
 episode_end: 3 # 3
+autoregress: false
 
 # FID
 fid_batch_size: 1000
@@ -164,6 +165,7 @@ model:
   cond_emb: false
   spade: false
   spade2: true # To use this, set to true and set spade to false
+  spade3: false # To use this, set to true and set other spades to false
   spade_dim: 128
 
 optim:

@@ -29,11 +29,12 @@ no_ema: false
 
 # Mode
 mode: video_gen # train, test, fast_fid, sample, video_gen
-use_encoding: true
-encoding_type: bilinear # avg, max, bilinear
+use_encoding: false
+encoding_type: avg # avg, max
 encoding_prob: 0.5
-ckpt_path: /scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/ckpt_150K_w_tokens.pt #/scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_300K_bs128_3epsends.pt #/scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_80k_bs32_0epends.pt # /scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_80k_bs32_0epends.pt # '/scratch/mr6744/shared/checkpoint.pt'
-episode_end: 3 # 3
+ckpt_path: /scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_800k_bs32_0epends.pt #/scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_300K_bs128_3epsends.pt #/scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_80k_bs32_0epends.pt # /scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_80k_bs32_0epends.pt # '/scratch/mr6744/shared/checkpoint.pt'
+episode_end: 0 # 3
+autoregress: false
 
 # FID
 fid_batch_size: 1000
@@ -58,7 +59,7 @@ start_at: 0
 
 training:
   L1: false
-  batch_size: 96
+  batch_size: 32
   n_epochs: 1000000
   n_iters: 3000001
   snapshot_freq: 50000
@@ -89,10 +90,10 @@ sampling:
   train: false
   num_frames_pred: 28
   clip_before: true
-  max_data_iter: 3
+  max_data_iter: 10
   init_prev_t: -1.0 # if >0, we start next_frame at prev_frame starting with noise t=init_prev_t
   one_frame_at_a_time: false # ALWAYS FALSE
-  preds_per_test: 1
+  preds_per_test: 5
 
 fast_fid:
   batch_size: 1000
@@ -164,7 +165,7 @@ model:
   cond_emb: false
   spade: false
   spade2: false # To use this, set to true and set spade to false
-  spade3: true # To use this, set to true and set other spades to false
+  spade3: false # To use this, set to true and set other spades to false
   spade_dim: 128
 
 optim:

@@ -1369,12 +1369,18 @@ class NCSNRunner():
         # num_frames_pred is 28!!
         assert self.condp > 0.0 and self.futrf > 0 and self.futrp > 0.0 and not self.prob_mask_sync # Always (1) Interp + (2) Pred + (3) Gen
         total_frames = self.condf + num_frames_pred + self.futrf
-        dataset_train = AtariDataset(os.path.join(self.args.data_path, "train"), total_frames, transforms=get_atari_transform(self.config.data.image_size), episode_end_frames=self.config.episode_end)
-        dataset_test = AtariDataset(os.path.join(self.args.data_path, "val"), total_frames, transforms=get_atari_transform(self.config.data.image_size), episode_end_frames=self.config.episode_end)
-        dataset = dataset_train if getattr(self.config.sampling, "train", False) else dataset_test
-        dataloader = DataLoader(dataset, batch_size=self.config.sampling.batch_size//preds_per_test, shuffle=True,
-                                num_workers=self.config.data.num_workers, drop_last=False, collate_fn=my_collate)
-        data_iter = iter(dataloader)
+        if self.config.autoregress:
+            dataset = AtariDataset(self.args.data_path, total_frames, transforms=get_atari_transform(self.config.data.image_size), episode_end_frames=self.config.episode_end)
+            dataloader = DataLoader(dataset, batch_size=self.config.sampling.batch_size//preds_per_test, shuffle=True,
+                                    num_workers=self.config.data.num_workers, drop_last=False, collate_fn=my_collate)
+            data_iter = iter(dataloader)
+        else:
+            dataset_train = AtariDataset(os.path.join(self.args.data_path, "train"), total_frames, transforms=get_atari_transform(self.config.data.image_size), episode_end_frames=self.config.episode_end)
+            dataset_test = AtariDataset(os.path.join(self.args.data_path, "val"), total_frames, transforms=get_atari_transform(self.config.data.image_size), episode_end_frames=self.config.episode_end)
+            dataset = dataset_train if getattr(self.config.sampling, "train", False) else dataset_test
+            dataloader = DataLoader(dataset, batch_size=self.config.sampling.batch_size//preds_per_test, shuffle=True,
+                                    num_workers=self.config.data.num_workers, drop_last=False, collate_fn=my_collate)
+            data_iter = iter(dataloader)
 
         if self.config.sampling.data_init:
             dataloader2 = DataLoader(dataset, batch_size=self.config.sampling.batch_size, shuffle=True,

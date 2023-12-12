@@ -9,12 +9,12 @@ import torch
 import omegaconf
 import numpy as np
 
-from agent import Agent
+from models.agent import Agent
 from envs import SingleProcessEnv, WorldModelEnv
 from game import AgentEnv, EpisodeReplayEnv, Save
 from models.actor_critic import ActorCritic
 from models.world_model import WorldModel
-import src_utils.misc as misc
+from utils import save_recording
 
 import json
 from einops import rearrange
@@ -83,7 +83,7 @@ def main(args):
             episode_buffer.append(np.array(frame.cpu()))
             encoder_buffer.append(np.array(encoded_frame))
 
-        misc.save_recording(Path(args.save_dir) / args.env_name / "train", str(i+1), np.stack(episode_buffer), np.stack(encoder_buffer))
+        save_recording(Path(args.save_dir) / args.env_name / "train", str(i+1), np.stack(episode_buffer), np.stack(encoder_buffer))
 
 
     for i, tr_one_episode in enumerate(val_episodes):
@@ -103,7 +103,7 @@ def main(args):
             episode_buffer.append(np.array(frame.cpu()))
             encoder_buffer.append(np.array(encoded_frame))
 
-        misc.save_recording(Path(args.save_dir) / args.env_name / "val", str(i+1), np.stack(episode_buffer), np.stack(encoder_buffer))
+        save_recording(Path(args.save_dir) / args.env_name / "val", str(i+1), np.stack(episode_buffer), np.stack(encoder_buffer))
 
 
 

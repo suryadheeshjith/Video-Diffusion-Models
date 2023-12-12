@@ -4,7 +4,7 @@ from PIL import Image
 import torch
 from torchvision.transforms.functional import InterpolationMode, resize
 
-from agent import Agent
+from models.agent import Agent
 from envs import SingleProcessEnv, WorldModelEnv
 from game.keymap import get_keymap_and_action_names
 

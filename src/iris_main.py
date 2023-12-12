@@ -1,7 +1,7 @@
 import hydra
 from omegaconf import DictConfig
 
-from trainer import Trainer
+from runners.iris_trainer import Trainer
 
 
 @hydra.main(config_path="../config", config_name="trainer")
