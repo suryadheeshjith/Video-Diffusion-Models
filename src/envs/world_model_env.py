@@ -102,3 +102,9 @@ class WorldModelEnv:
     def render(self):
         assert self.obs_tokens.shape == (1, self.num_observations_tokens)
         return self.render_batch()[0]
+
+    @torch.no_grad()
+    def get_tokens(self):
+        embedded_tokens = self.tokenizer.embedding(self.obs_tokens)
+        z = rearrange(embedded_tokens, 'b (h w) e -> b e h w', h=int(np.sqrt(self.num_observations_tokens)))
+        return z

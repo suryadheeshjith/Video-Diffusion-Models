@@ -8,7 +8,7 @@ import omegaconf
 
 from models.agent import Agent
 from envs import SingleProcessEnv, WorldModelEnv
-from game import AgentEnv, EpisodeReplayEnv, Save
+from game import AgentEnv, EpisodeReplayEnv, SaveAutoregressive
 from models.actor_critic import ActorCritic
 from models.world_model import WorldModel
 
@@ -39,12 +39,17 @@ def main(args):
     agent = Agent(tokenizer, world_model, actor_critic).to(device)
     agent.load(Path(args.checkpoint_dir) / "{}.pt".format(args.checkpoint_file), device)    
 
-    env = AgentEnv(agent, test_env, args.iris.env.keymap, do_reconstruction=args.reconstruction)
+    # env = AgentEnv(agent, test_env, args.iris.env.keymap, do_reconstruction=args.reconstruction)
+    env = WorldModelEnv(agent.tokenizer, agent.world_model, device, env_fn())
     keymap = 'empty'
     if args.reconstruction:
         size[1] *= 3
 
-    save = Save(env, keymap_name=keymap, size=size, fps=args.fps, verbose=bool(args.header), record_mode=bool(args.save_mode), save_dir=Path(args.save_dir) / args.dataset_name)
+    save = SaveAutoregressive(env, actor_critic ,keymap_name=keymap, size=64,\
+                                                fps=args.fps, verbose=bool(args.header), \
+                                                record_mode=bool(args.save_mode),\
+                                                save_dir=Path(args.save_dir) / args.dataset_name,\
+                                                episode_steps=args.iris.env.test.max_episode_steps)
     save.run()
 
 
