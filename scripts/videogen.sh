@@ -19,20 +19,23 @@
 ######
 # With Token embeddings
 #######
+
+# Matteo
 # with emb - 150 k : Use only for testing
 # ./.python-greene submitit_hydra.py compute/greene=1x1 compute/greene/node=rtx8000_2hrs exp=breakout_videogen_150k_bs96_3eps name="$(date +%F)-VIDEOGEN-baseline_150k_bs96_3eps"
 
 # ./.python-greene submitit_hydra.py compute/greene=1x1 compute/greene/node=rtx8000_2hrs exp=breakout_videogen_200k_bs96_3eps name="$(date +%F)-VIDEOGEN-200k_bs96_3eps_2"
 ####
 
-# ./.python-greene submitit_hydra.py compute/greene=1x1 compute/greene/node=rtx8000_2hrs exp=breakout_videogen_spade_avg name="$(date +%F)-VIDEOGEN-168k_spade_avg"
+# Mine
+# ./.python-greene submitit_hydra.py compute/greene=1x1 compute/greene/node=rtx8000_6hrs exp=breakout_videogen_spade_avg name="$(date +%F)-VIDEOGEN-3495k_spade_avg_10_5"
 
-# ./.python-greene submitit_hydra.py compute/greene=1x1 compute/greene/node=rtx8000_2hrs exp=breakout_videogen_concat_avg name="$(date +%F)-VIDEOGEN-168k_concat_avg"
+# ./.python-greene submitit_hydra.py compute/greene=1x1 compute/greene/node=rtx8000_2hrs exp=breakout_videogen_concat_avg name="$(date +%F)-VIDEOGEN-349k_concat_avg_10_5"
 
 ## Autoregress
 
-# ./.python-greene submitit_hydra.py compute/greene=1x1 compute/greene/node=rtx8000_2hrs exp=breakout_videogen_spade_avg_autoregress name="$(date +%F)-VIDEOGEN-168k_spade_avg_autoregress"
+# ./.python-greene submitit_hydra.py compute/greene=1x1 compute/greene/node=rtx8000_6hrs exp=breakout_videogen_spade_avg_autoregress name="$(date +%F)-VIDEOGEN-3495k_spade_avg_autoregress"
 
-./.python-greene submitit_hydra.py compute/greene=1x1 compute/greene/node=rtx8000_2hrs exp=breakout_videogen_concat_avg_autoregress name="$(date +%F)-VIDEOGEN-300k_concat_avg_autoregress_100pred"
+./.python-greene submitit_hydra.py compute/greene=1x1 compute/greene/node=rtx8000_2hrs exp=breakout_videogen_concat_avg_autoregress name="$(date +%F)-VIDEOGEN-733k_concat_avg_autoregress"
 
 # ./.python-greene submitit_hydra.py compute/greene=1x1 compute/greene/node=rtx8000_2hrs exp=breakout_videogen_200k_bs96_3eps_autoregress name="$(date +%F)-VIDEOGEN-200k_bs96_3eps_autoregress"
