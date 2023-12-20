@@ -79,7 +79,7 @@ def get_atari_transform(size):
 
 
 
-if __init__ == "__main__":
+if __name__ == "__main__":
     # dataset = AtariDataset("/vast/pt2310/BreakoutNoFrameskip-v4/train", 9)
     # print("Train Dataset Length", len(dataset))
     # dataloader = DataLoader(dataset, batch_size=1, shuffle=True, num_workers=4)
