@@ -1,8 +1,0 @@
-train:
-  _target_: datasets.iris_dataset.EpisodesDatasetRamMonitoring
-  max_ram_usage: 30G
-  name: train_dataset
-test:
-  _target_: datasets.iris_dataset.dataset.EpisodesDataset
-  max_num_episodes: null
-  name: test_dataset
