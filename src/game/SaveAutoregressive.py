@@ -39,19 +39,19 @@ class SaveAutoregressive:
     def get_next_token(self, action_token):
         action_token = action_token.clone().detach() if isinstance(action_token, torch.Tensor) else torch.tensor(action_token, dtype=torch.long)
         next_token = self.env.agent.world_model(action_token, should_predict_next_obs=True)
-
+        
         return next_token
-
+    
     def get_action_token(self, obs):
         outputs_ac = self.actor_critic(obs)
         action_token = Categorical(logits=outputs_ac.logits_actions).sample()   
 
         return action_token
-
+    
     def atari_transform(self, img, size):
         return TF.resize(img, (size,size))
 
-
+    
     def run(self) -> None:
 
         if isinstance(self.env, gym.Env):
@@ -83,7 +83,7 @@ class SaveAutoregressive:
             if self.record_mode:
                 world_model_frame = self.env.render()
                 episode_buffer.append(np.array(world_model_frame))
-                token_buffer.append(state_token.detach().cpu().numpy())
+                token_buffer.append(state_token.squeeze().detach().cpu().numpy())
 
             if do_reset or done:
                 self.actor_critic.reset(n=1)
@@ -101,7 +101,7 @@ class SaveAutoregressive:
         self.record_dir.mkdir(exist_ok=True, parents=True)
         self.counter += 1
         frames_file = str(self.counter) + '_frames.npy'
-        tokens_file = str(self.counter) + '_tokens.npy'
+        tokens_file = str(self.counter) + '_encodings.npy'
 
         np.save(self.record_dir / frames_file, frames)
         np.save(self.record_dir / tokens_file, tokens)
