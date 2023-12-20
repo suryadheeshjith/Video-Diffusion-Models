@@ -79,21 +79,22 @@ def get_atari_transform(size):
 
 
 
-# dataset = AtariDataset("/vast/pt2310/BreakoutNoFrameskip-v4/train", 9)
-# print("Train Dataset Length", len(dataset))
-# dataloader = DataLoader(dataset, batch_size=1, shuffle=True, num_workers=4)
+if __init__ == "__main__":
+    # dataset = AtariDataset("/vast/pt2310/BreakoutNoFrameskip-v4/train", 9)
+    # print("Train Dataset Length", len(dataset))
+    # dataloader = DataLoader(dataset, batch_size=1, shuffle=True, num_workers=4)
 
-# print(len(os.listdir("/vast/sd5313/data/BreakoutNoFrameskip-v4/val"))/2)
-# val_dataset = AtariDataset("/vast/sd5313/data/BreakoutNoFrameskip-v4/val", 9, 64, 0)
-# print("Val Dataset Length with ep 0 ", len(val_dataset))
-val_dataset = AtariDataset("/vast/sd5313/data/Breakout_autoregressive", 9, get_atari_transform(64), 3)
-print("Dataset Length with ep 3", len(val_dataset))
-val_dataloader = DataLoader(val_dataset, batch_size=32, shuffle=True, num_workers=0)
+    # print(len(os.listdir("/vast/sd5313/data/BreakoutNoFrameskip-v4/val"))/2)
+    # val_dataset = AtariDataset("/vast/sd5313/data/BreakoutNoFrameskip-v4/val", 9, 64, 0)
+    # print("Val Dataset Length with ep 0 ", len(val_dataset))
+    val_dataset = AtariDataset("/vast/sd5313/data/Breakout_autoregressive", 9, get_atari_transform(64), 3)
+    print("Dataset Length with ep 3", len(val_dataset))
+    val_dataloader = DataLoader(val_dataset, batch_size=32, shuffle=True, num_workers=0)
 
-# for i, (frames, encodings) in enumerate(dataloader):
-#     print(frames.shape, encodings.shape)
-#     break
+    # for i, (frames, encodings) in enumerate(dataloader):
+    #     print(frames.shape, encodings.shape)
+    #     break
 
-for i, (frames, encodings) in enumerate(val_dataloader):
-    print(frames.shape, encodings.shape)
-    break
+    for i, (frames, encodings) in enumerate(val_dataloader):
+        print(frames.shape, encodings.shape)
+        break
