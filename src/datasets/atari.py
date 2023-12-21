@@ -24,12 +24,17 @@ class AtariDataset(Dataset):
 
         self.frames = []
         self.encodings = []
+        
+        num_files = self.get_num_files()
         # iterate over data files
-        for i in range(int(len(os.listdir(self.folder_path))/2)):
+        for i in range(num_files):
             self.raw_frame_data.append(np.load(os.path.join(self.folder_path, "{}_frames.npy".format(i+1))))
             self.raw_encoding_data.append(np.load(os.path.join(self.folder_path, "{}_encodings.npy".format(i+1))))
 
-            assert len(self.raw_frame_data[-1]) == len(self.raw_encoding_data[-1])
+            if len(self.raw_frame_data[-1]) != len(self.raw_encoding_data[-1]):
+                min_len = min(len(self.raw_frame_data[-1]), len(self.raw_encoding_data[-1]))
+                self.raw_frame_data[-1] = self.raw_frame_data[-1][:min_len]
+                self.raw_encoding_data[-1] = self.raw_encoding_data[-1][:min_len]
         
         assert len(self.raw_frame_data) == len(self.raw_encoding_data)
         
@@ -44,6 +49,19 @@ class AtariDataset(Dataset):
                     self.frames.append(self.raw_frame_data[i][j:j+total_frames][:])
                     self.encodings.append(self.raw_encoding_data[i][j:j+total_frames][:])
                 
+    def get_num_files(self):
+        file_pattern = "_decoded_frames.npy"
+        
+        if self.file_exists(file_pattern):
+            return int(len(os.listdir(self.folder_path))/3)
+        else:
+            return int(len(os.listdir(self.folder_path))/2)  
+
+    def file_exists(self, file_pattern):
+        for filename in os.listdir(self.folder_path):
+            if file_pattern in filename:
+                return True
+        return False
 
     def __len__(self):
         """
@@ -70,6 +88,96 @@ class AtariDataset(Dataset):
             frames = self.transforms(frames)
         
         return frames, encodings
+
+
+class AtariDataset2(Dataset):
+    def __init__(self, folder_path, total_frames, transforms=None, episode_end_frames=3):
+        """
+        Dataset Initialization.
+
+        Parameters:
+        folder_path (str): Path to the folder containing the dataset.
+        transforms (callable, optional): Optional transform to be applied on a sample.
+        """
+        
+        self.folder_path = folder_path
+        self.transforms = transforms
+
+        # load dataset
+        self.raw_frame1_data = []
+        self.raw_frame2_data = []
+
+        self.frames1 = []
+        self.frames2 = []
+        
+        num_files = self.get_num_files()
+        # iterate over data files
+        for i in range(num_files):
+            self.raw_frame1_data.append(np.load(os.path.join(self.folder_path, "{}_frames.npy".format(i+1))))
+            self.raw_frame2_data.append(np.load(os.path.join(self.folder_path, "{}_decoded_frames.npy".format(i+1))))
+
+            if len(self.raw_frame1_data[-1]) != len(self.raw_frame2_data[-1]):
+                min_len = min(len(self.raw_frame1_data[-1]), len(self.raw_frame2_data[-1]))
+                self.raw_frame1_data[-1] = self.raw_frame1_data[-1][:min_len]
+                self.raw_frame2_data[-1] = self.raw_frame2_data[-1][:min_len]
+        
+        assert len(self.raw_frame1_data) == len(self.raw_frame2_data)
+        
+        for i in range(len(self.raw_frame1_data)):
+            for j in range(len(self.raw_frame1_data[i])-total_frames+episode_end_frames):
+                total_len = len(self.raw_frame1_data[i])
+                
+                if j > total_len-total_frames:
+                    self.frames1.append(np.concatenate((self.raw_frame1_data[i][j:][:],self.raw_frame1_data[i][:total_frames-(total_len-j)][:])))
+                    self.frames2.append(np.concatenate((self.raw_frame2_data[i][j:][:],self.raw_frame2_data[i][:total_frames-(total_len-j)][:])))
+                else:
+                    self.frames1.append(self.raw_frame1_data[i][j:j+total_frames][:])
+                    self.frames2.append(self.raw_frame2_data[i][j:j+total_frames][:])
+                
+    def get_num_files(self):
+        file_pattern = "_decoded_frames.npy"
+        
+        if self.file_exists(file_pattern):
+            return int(len(os.listdir(self.folder_path))/3)
+        else:
+            return int(len(os.listdir(self.folder_path))/2)  
+
+    def file_exists(self, file_pattern):
+        for filename in os.listdir(self.folder_path):
+            if file_pattern in filename:
+                return True
+        return False
+
+    def __len__(self):
+        """
+        Returns the total number of samples in the dataset.
+        """
+        return len(self.frames1)
+
+    def __getitem__(self, idx):
+        """
+        Returns sample.
+
+        Parameters:
+        idx (int): Index of the sample to fetch.
+        """
+        # Fetch the data sample
+        frames1 = torch.from_numpy(self.frames1[idx]).float()
+        # Normalize the frames to be between 0 and 1
+        frames1 = frames1 / 255.0
+
+        frames2 = torch.from_numpy(self.frames2[idx]).float()
+        frames2 = frames2 / 255.0
+        if self.transforms:
+            if frames1.shape[-1] == 3:
+                frames1 = frames1.permute(0, 3, 1, 2)
+            frames1 = self.transforms(frames1)
+
+            if frames2.shape[-1] == 3:
+                frames2 = frames2.permute(0, 3, 1, 2)
+            frames2 = self.transforms(frames2)
+        
+        return frames1, frames2
     
 def get_atari_transform(size):
     transform = transforms.Compose([

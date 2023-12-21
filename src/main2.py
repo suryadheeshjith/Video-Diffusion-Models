@@ -241,6 +241,10 @@ def main(args):
         elif args.mode == "fast_fid":
             args = setup_fast_fid(args)
             runner.fast_fid()
+        
+        elif args.mode == "compare_iris_decoded":
+            args = setup_video_gen(args)
+            runner.compare_iris_decoded()
 
         elif args.interact:
             pass

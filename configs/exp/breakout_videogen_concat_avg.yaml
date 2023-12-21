@@ -17,7 +17,7 @@ stats_dir: 'datasets' # check
 seed: 1234 
 verbose: 'info' # Verbose level: info | debug | warning | critical
 stats_download: false
-data_path: /vast/sd5313/data/BreakoutNoFrameskip-v4
+data_path: /vast/pt2310/BreakoutNoFrameskip-v4
 
 resume_training: false
 comment: ''
@@ -32,7 +32,7 @@ mode: video_gen # train, test, fast_fid, sample, video_gen
 use_encoding: true
 encoding_type: avg # avg, max
 encoding_prob: 0.5
-ckpt_path: /scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/CONCAT_AVG_checkpoint_349000.pt #/scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_300K_bs128_3epsends.pt #/scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_80k_bs32_0epends.pt # /scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_80k_bs32_0epends.pt # '/scratch/mr6744/shared/checkpoint.pt'
+ckpt_path: /scratch/pt2310/llvm-project/DiffusionModels/checkpoints/checkpoint_concat_avg_1452000.pt #/scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_300K_bs128_3epsends.pt #/scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_80k_bs32_0epends.pt # /scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_80k_bs32_0epends.pt # '/scratch/mr6744/shared/checkpoint.pt'
 episode_end: 3 # 3
 autoregress: false
 

@@ -34,7 +34,7 @@ class AgentEnv:
         self.agent.actor_critic.reset(1)
         self._t = 0
         self._return = 0
-        return obs
+        return self.obs
 
     def step(self, *args, **kwargs) -> torch.FloatTensor:
         with torch.no_grad():
@@ -48,7 +48,7 @@ class AgentEnv:
             'action': self.action_names[act[0]],
             'return': self._return,
         }
-        return obs, reward, done, info
+        return self.obs, reward, done, info
 
     def render(self) -> Image.Image:
         assert self.obs.size() == (1, 3, 64, 64)

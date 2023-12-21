@@ -30,9 +30,9 @@ no_ema: false
 # Mode
 mode: video_gen # train, test, fast_fid, sample, video_gen
 use_encoding: true
-encoding_type: bilinear # avg, max, bilinear
+encoding_type: avg # avg, max
 encoding_prob: 0.5
-ckpt_path: /scratch/pt2310/llvm-project/DiffusionModels/checkpoints/ckpt_500K_w_tokens.pt #/scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_300K_bs128_3epsends.pt #/scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_80k_bs32_0epends.pt # /scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_80k_bs32_0epends.pt # '/scratch/mr6744/shared/checkpoint.pt'
+ckpt_path: /scratch/pt2310/llvm-project/DiffusionModels/checkpoints/checkpoint_spade_frames_998000.pt #/scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_300K_bs128_3epsends.pt #/scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_80k_bs32_0epends.pt # /scratch/sd5313/CILVR/fall23/LLVM/DiffusionModels/checkpoints/checkpoint_80k_bs32_0epends.pt # '/scratch/mr6744/shared/checkpoint.pt'
 episode_end: 3 # 3
 autoregress: false
 
@@ -59,10 +59,10 @@ start_at: 0
 
 training:
   L1: false
-  batch_size: 96
+  batch_size: 32
   n_epochs: 1000000
   n_iters: 3000001
-  snapshot_freq: 50000
+  snapshot_freq: 1500
   snapshot_sampling: false
   sample_freq: 50000
   val_freq: 1000
@@ -120,7 +120,7 @@ data:
   uniform_dequantization: false
   gaussian_dequantization: false
   random_flip: true
-  rescaled: false
+  rescaled: true
   color_jitter: 0.2
   num_workers: 0
   num_frames: 5
@@ -163,9 +163,9 @@ model:
   noise_in_cond: false
   output_all_frames: false # ALWAYS SET TO FALSE. could be useful especially for 3d models
   cond_emb: false
-  spade: false
+  spade: true
   spade2: false # To use this, set to true and set spade to false
-  spade3: true # To use this, set to true and set other spades to false
+  spade3: false
   spade_dim: 128
 
 optim:

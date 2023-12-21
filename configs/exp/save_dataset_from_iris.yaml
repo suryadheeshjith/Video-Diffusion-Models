@@ -10,11 +10,11 @@ output_dir: ${join_path:${hydra:sweep.dir},${hydra:sweep.subdir}}
 checkpoint_dir: ${join_path:${base_output_dir},checkpoints}
 checkpoint_file: Breakout # Change if reqd
 save_dir:  ${join_path:${base_output_dir}, iris_datasets}
-mode: "agent_in_world_model" # agent_in_env | agent_in_world_model
+mode: agent_in_env #"agent_in_world_model" # agent_in_env | agent_in_world_model
 
 # data parameters
 data_overlay: ""
-dataset_name: "Breakout_autoregressive" # Change if reqd
+dataset_name: "Breakout_autoregressive_realframes" # Change if reqd
 iris:
   env:
     train: 
