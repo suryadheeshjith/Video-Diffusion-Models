@@ -5,7 +5,7 @@ def filter_yaml(input_file, output_file, keys_to_keep):
     with open(input_file, 'r') as file:
         data = yaml.safe_load(file)
 
-    filtered_data = {key: data[key] for key in keys_to_keep if key in data}
+    filtered_data = {key: round(data[key],2) for key in keys_to_keep if key in data}
 
     with open(output_file, 'w') as file:
         yaml.dump(filtered_data, file)
@@ -22,5 +22,5 @@ if __name__ == "__main__":
     ]
 
     # Specify the root directory path
-    directory_path = '/scratch/pt2310/llvm-project/DiffusionModels/main2_convert'
+    directory_path = '/scratch/pt2310/llvm-project/DiffusionModels/main2_convert2'
     process_directory(directory_path, keys)

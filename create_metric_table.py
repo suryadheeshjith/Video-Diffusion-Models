@@ -49,7 +49,7 @@ if __name__ == "__main__":
     ]
 
     # Specify the root directory path
-    directory_path = '/scratch/pt2310/llvm-project/DiffusionModels/main2_convert'
+    directory_path = '/scratch/pt2310/llvm-project/DiffusionModels/main2_convert2'
 
     # Process the directory and get data in DataFrame
     df = process_directory_for_csv(directory_path, keys)

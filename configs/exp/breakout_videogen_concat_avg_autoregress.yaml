@@ -88,7 +88,7 @@ sampling:
   step_lr: 0.0
   n_steps_each: 0
   train: false
-  num_frames_pred: 100
+  num_frames_pred: 300
   clip_before: true
   max_data_iter: 10
   init_prev_t: -1.0 # if >0, we start next_frame at prev_frame starting with noise t=init_prev_t
