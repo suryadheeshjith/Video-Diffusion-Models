@@ -1,4 +1,4 @@
-# Video Diffusion Models
+# Exploring 2D UNets and Conditional Diffusion with World Models for Video Generation
 
 ### Abstract
 We introduce a novel approach for generating coherent videos using conditional diffusion models. To condition our diffusion model, we use tokens generated from a pre-trained world model.
