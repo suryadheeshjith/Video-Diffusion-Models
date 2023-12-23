@@ -24,7 +24,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 
 
-  <title>Video Diffusion</title>
+  <title>Video Diffusion Models</title>
   <!-- <link rel="icon" type="image/x-icon" href="static/images/favicon.ico"> -->
   <!-- <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
   rel="stylesheet"> -->
@@ -52,7 +52,7 @@
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">World Models + Diffusion Models</h1>
+            <h1 class="title is-1 publication-title">Exploring 2D UNets and Conditional Diffusion with World Models for Video Generation</h1>
             <div class="is-size-5 publication-authors">
               <!-- Paper authors -->
               <span class="author-block">
@@ -123,17 +123,38 @@
 
 
 <!-- Teaser video-->
-<section class="hero is-small">
+<!-- <section class="hero is-small">
   <div class="container is-max-desktop">
-    <div class="hero-body">
-      <image src="static/videos/autoreg.gif" style="width:100%;" class="img-responsive center-block" alt="overview">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+      <image src="static/videos/spade_800k_good.gif" style="width:200px;" class="img-responsive center-block" alt="overview">
       <h2 class="subtitle has-text-centered">
-        Aliquam vitae elit ullamcorper tellus egestas pellentesque. Ut lacus tellus, maximus vel lectus at, placerat pretium mi. Maecenas dignissim tincidunt vestibulum. Sed consequat hendrerit nisl ut maximus. 
+        Generated Video using FSTC Conditioning
       </h2>
     </div>
+    </div>
   </div>
-</section>
+</section> -->
 <!-- End teaser video -->
+
+<!-- Add image architecture -->
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <img src="static/images/arch_iris_mcvd.png" style="width:400px;" alt="MY ALT TEXT"/>
+          <h2 class="subtitle has-text-centered">
+            A world model, called<a href = "https://arxiv.org/pdf/2209.00588.pdf"> IRIS,</a> is used to autoregressively generate tokens and condition them on a 2D UNet Video Diffusion model, called <a href = "https://proceedings.neurips.cc/paper_files/paper/2022/hash/944618542d80a63bbec16dfbd2bd689a-Abstract-Conference.html"> MCVD,</a> by
+concatenating them to noisy frames for denoising. We condition real frames by either concatenating them to the noisy frames (FCTC) or
+by SPATIN Conditioning (FSTC) (dotted lines indicate each possibility).
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- End image architecture -->
+
 
 
 <!-- Paper abstract -->
@@ -152,44 +173,66 @@
 <!-- End paper abstract -->
 
 
-
-
 <!-- Image carousel -->
-<!-- <section class="hero is-small">
+<section class="hero is-small">
   <div class="hero-body">
     <div class="container">
       <div id="results-carousel" class="carousel results-carousel">
-       <div class="item">
-        <img src="static/images/carousel1.jpg" alt="MY ALT TEXT"/>
-        <h2 class="subtitle has-text-centered">
-          First image description.
+        <!-- <div class="item">
+          <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+          <img src="static/videos/concat_endgame.gif" style="width:400px;" alt="MY ALT TEXT"/>
+          <h2 class="subtitle has-text-centered">
+          Real Frames vs FCTC Conditioning
         </h2>
-      </div>
-      <div class="item">
-
-        <img src="static/images/carousel2.jpg" alt="MY ALT TEXT"/>
-        <h2 class="subtitle has-text-centered">
-          Second image description.
-        </h2>
-      </div>
-      <div class="item">
-
-        <img src="static/images/carousel3.jpg" alt="MY ALT TEXT"/>
-        <h2 class="subtitle has-text-centered">
-         Third image description.
-       </h2>
-     </div>
-     <div class="item">
-
-      <img src="static/images/carousel4.jpg" alt="MY ALT TEXT"/>
-      <h2 class="subtitle has-text-centered">
-        Fourth image description.
-      </h2>
+          </div>
+          </div>
+        </div> -->
+        <div class="item">
+          <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+          <img src="static/videos/iris_decoded_28.gif" style="width:400px;" alt="MY ALT TEXT"/>
+          <h2 class="subtitle has-text-centered">
+            IRIS Decoded Frames vs FCTC Conditioning on Prediction
+          </h2>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="item">
+          <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+          <img src="static/videos/iris_decoded_another_ex.gif" style="width:400px;" alt="MY ALT TEXT"/>
+          <h2 class="subtitle has-text-centered">
+            IRIS Decoded Frames vs FCTC Conditioning on Prediction (2)
+          </h2>
+            </div>
+          </div>
+        </div> -->
+        <div class="item">
+          <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+            <img src="static/videos/spade_800k_good.gif" style="width:400px;" alt="MY ALT TEXT"/>
+              <h2 class="subtitle has-text-centered">
+              FSTC Conditioning on Frame-Unconditional Generation
+              </h2>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+            <img src="static/videos/baseline_800k_bad.gif" style="width:400px;" alt="MY ALT TEXT"/>
+              <h2 class="subtitle has-text-centered">
+              Baseline Model - Incoherent Example
+              </h2>
+            </div>
+          </div>
+        </div>
     </div>
   </div>
 </div>
 </div>
-</section> -->
+</section>
 <!-- End image carousel -->
 
 
@@ -265,19 +308,19 @@
 
 
 <!-- BibTex citation -->
-  <!-- <section class="section" id="BibTeX">
+  <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
       <h2 class="title">BibTeX</h2>
-      <pre><code>@software{,
-        author = {},
+      <pre><code>@software{dheeshjith2023exploring,
+        author = {Dheeshjith, Surya and Tadimeti, Pranav and Rossi, Matteo},
         month = dec,
-        title = {{}},
-        url = {https://github.com/},
+        title = {{Exploring 2D UNets and Conditional Diffusion with World Models for Video Generation}},
+        url = {https://github.com/suryadheeshjith/Video-Diffusion-Models},
         version = {1.0.0},
         year = {2023}
     }</code></pre>
     </div>
-</section> -->
+</section>
 <!--End BibTex citation -->
 
 
